@@ -218,6 +218,13 @@ def initialize_callbacks_on_proxy(
                     **azure_content_safety_params,
                 )
                 imported_list.append(azure_content_safety_obj)
+            elif isinstance(callback, str) and callback == "compliance_checker":
+                from litellm.proxy.hooks.compliance_checker import (
+                    _PROXY_ComplianceChecker,
+                )
+
+                compliance_checker_obj = _PROXY_ComplianceChecker()
+                imported_list.append(compliance_checker_obj)
             else:
                 verbose_proxy_logger.debug(
                     f"{blue_color_code} attempting to import custom calback={callback} {reset_color_code}"
